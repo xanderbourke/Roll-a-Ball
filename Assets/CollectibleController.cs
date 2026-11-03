@@ -1,4 +1,4 @@
-/***********************************************************************************************************************************************
+ /***********************************************************************************************************************************************
 * COMPONENT OF: Collectible Prefabs
 * REQUIRED DEPENDENCIES: GameManager, Collider Trigger and Particle System Components
 * DESCRIPTION: This script handles player collection logic, plays deeback audio/particles.
@@ -19,6 +19,8 @@ public class CollectibleController : MonoBehaviour
         // Only executes if the collision was with the Player
         if (other.CompareTag("Player"))
         {
+            gameManager.UpdateRemaining();
+
             // Spawn audio at the collectible's position (auto-destroys)
             AudioSource.PlayClipAtPoint(collectSound, transform.position);
 
@@ -29,11 +31,15 @@ public class CollectibleController : MonoBehaviour
             Destroy(gameObject);
         }
     }
+private GameManager gameManager;
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        // Finds the Game Manager in the Scene
+gameManager = FindAnyObjectByType<GameManager>();
+
     }
 
     // Update is called once per frame
