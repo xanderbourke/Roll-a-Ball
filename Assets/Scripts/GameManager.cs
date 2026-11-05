@@ -1,5 +1,7 @@
 using UnityEngine;
 using TMPro;  // Brings in the Text Mesh script package into this script
+using System.Collections;
+using UnityEngine.SceneManagement;
 /************************************************************
 * COMPONENT OF: Game Manager
 * REQUIRED DEPENDENCIES: TextMeshProUGUI
@@ -12,6 +14,7 @@ public class GameManager : MonoBehaviour
 { 
     // UI text that shows collectibles remaining (assign in inspector)
     [SerializeField] private TextMeshProUGUI RemainingTextUI;
+      [SerializeField] private AudioClip winClip;
 
     // Audio source for victory sound
     private AudioSource audioSource;
@@ -49,11 +52,22 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            RemainingTextUI.text = "You Win";
-		audioSource.clip = winClip;
-            audioSource.Play();
+            StartCoroutine("EndGame");
         }
     }
+    IEnumerator EndGame()
+    {
+        RemainingTextUI.text = "You Win";
+		audioSource.clip = winClip;
+            audioSource.Play();
+        yield return new WaitForSeconds(audioSource.clip.length);    
+        // Reloads the currently active scene
+        Scene currentScene = SceneManager.GetActiveScene();
+        SceneManager.LoadScene(currentScene.name);
 
-    [SerializeField] private AudioClip winClip;
+    }
+   
 }
+
+  
+
