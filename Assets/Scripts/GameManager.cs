@@ -59,8 +59,8 @@ public class GameManager : MonoBehaviour
     {
         RemainingTextUI.text = "You Win";
 		audioSource.clip = winClip;
-            audioSource.Play();
-        yield return new WaitForSeconds(audioSource.clip.length);    
+            audioSource.Play();  
+        yield return new WaitForSeconds(15f);
         // Reloads the currently active scene
         Scene currentScene = SceneManager.GetActiveScene();
         SceneManager.LoadScene(currentScene.name);
